@@ -6,8 +6,8 @@ class WaitlistApp {
 
     initWebGL() {
         const params = {
-            enableWebGL: window.innerWidth > 768,
-            particleCount: window.innerWidth > 1200 ? 120 : 60,
+            enableWebGL: true, // Enable WebGL on all devices
+            particleCount: window.innerWidth > 1200 ? 120 : window.innerWidth > 768 ? 80 : 40, // Reduce particles on mobile
             animationSpeed: 0.0015
         };
 
@@ -84,13 +84,22 @@ class WaitlistApp {
             mesh.rotation.y = mouseX * 0.1;
         });
 
+        // Add touch support for mobile devices
+        document.addEventListener('touchmove', (event) => {
+            const touch = event.touches[0];
+            mouseX = (touch.clientX / window.innerWidth) * 2 - 1;
+            mouseY = (touch.clientY / window.innerHeight) * 2 - 1;
+            mesh.rotation.x = -Math.PI * 0.5 + mouseY * 0.1;
+            mesh.rotation.y = mouseX * 0.1;
+        });
+
         animate();
     }
 
     initForm() {
         const form = document.querySelector('.waitlist-form');
         const button = form.querySelector('.submit-btn');
-        const input = form.querySelector('.input-field');
+        const input = document.querySelector('.input-field');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
