@@ -1,4 +1,3 @@
-// script.js
 class WaitlistApp {
     constructor() {
         this.initWebGL();
