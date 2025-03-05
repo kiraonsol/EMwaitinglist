@@ -11,9 +11,21 @@ class WaitlistApp {
             animationSpeed: 0.0015
         };
 
-        if (!params.enableWebGL) return;
+        if (!params.enableWebGL) {
+            console.log("WebGL is disabled.");
+            return;
+        }
 
+        // Check if WebGL is supported
         const canvas = document.querySelector('#webgl-background');
+        const gl = canvas.getContext('webgl');
+        if (!gl) {
+            console.error("WebGL is not supported on this device.");
+            return;
+        }
+
+        console.log("Initializing WebGL animation...");
+
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({
@@ -27,7 +39,7 @@ class WaitlistApp {
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
         const geometry = new THREE.PlaneGeometry(30, 30, 32, 32);
-        const material = new THREE.MeshPhongMaterial({
+        const material = new THREE.MeshBasicMaterial({
             color: 0xE25747,
             wireframe: true,
             transparent: true,
@@ -38,14 +50,6 @@ class WaitlistApp {
         mesh.rotation.x = -Math.PI * 0.5;
         scene.add(mesh);
 
-        const lights = {
-            ambient: new THREE.AmbientLight(0xffffff, 0.5),
-            point: new THREE.PointLight(0xE25747, 1.5),
-            hemisphere: new THREE.HemisphereLight(0xE25747, 0x000000, 0.4)
-        };
-
-        lights.point.position.set(2, 3, 4);
-        Object.values(lights).forEach(light => scene.add(light));
         camera.position.set(0, 5, 7);
 
         let lastTime = 0;
@@ -93,6 +97,7 @@ class WaitlistApp {
             mesh.rotation.y = mouseX * 0.1;
         });
 
+        console.log("Starting WebGL animation...");
         animate();
     }
 
