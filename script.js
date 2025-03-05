@@ -6,8 +6,8 @@ class WaitlistApp {
 
     initWebGL() {
         const params = {
-            enableWebGL: true, // Enable WebGL on all devices
-            particleCount: window.innerWidth > 1200 ? 120 : window.innerWidth > 768 ? 80 : 40, // Reduce particles on mobile
+            enableWebGL: true,
+            particleCount: window.innerWidth > 1200 ? 120 : window.innerWidth > 768 ? 80 : 40,
             animationSpeed: 0.0015
         };
 
@@ -16,8 +16,15 @@ class WaitlistApp {
             return;
         }
 
-        // Check if WebGL is supported
         const canvas = document.querySelector('#webgl-background');
+        const heroContent = document.querySelector('.hero-content');
+
+        // Move the canvas inside .hero-content on mobile (<= 1024px)
+        if (window.innerWidth <= 1024) {
+            heroContent.appendChild(canvas);
+            console.log("Moved canvas to .hero-content for mobile.");
+        }
+
         const gl = canvas.getContext('webgl');
         if (!gl) {
             console.error("WebGL is not supported on this device.");
@@ -72,6 +79,19 @@ class WaitlistApp {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
+
+            // Re-check screen size on resize and move canvas if needed
+            if (window.innerWidth <= 1024) {
+                if (canvas.parentNode !== heroContent) {
+                    heroContent.appendChild(canvas);
+                    console.log("Moved canvas to .hero-content on resize (mobile).");
+                }
+            } else {
+                if (canvas.parentNode !== document.body) {
+                    document.body.insertBefore(canvas, document.body.firstChild);
+                    console.log("Moved canvas to body on resize (desktop).");
+                }
+            }
         };
 
         let resizeTimeout;
@@ -88,7 +108,6 @@ class WaitlistApp {
             mesh.rotation.y = mouseX * 0.1;
         });
 
-        // Add touch support for mobile devices
         document.addEventListener('touchmove', (event) => {
             const touch = event.touches[0];
             mouseX = (touch.clientX / window.innerWidth) * 2 - 1;
