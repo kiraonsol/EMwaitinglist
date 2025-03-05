@@ -37,6 +37,27 @@ body {
     display: block;
 }
 
+.webgl-fallback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(245, 245, 245, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    z-index: 1;
+}
+
+.webgl-fallback p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
 .content {
     position: relative;
     z-index: 2;
@@ -112,7 +133,7 @@ body {
     padding: 1rem 1.5rem;
     border: 1px solid rgba(0, 0, 0, 0.05);
     border-radius: 8px;
-    background: var(--glass);
+    background: linear-gradient(135deg, rgba(200, 200, 200, 0.15) 0%, rgba(150, 150, 150, 0.15) 100%); /* Subtle darker gradient */
     backdrop-filter: blur(12px);
     transition: all 0.3s ease;
 }
@@ -187,10 +208,10 @@ body {
 .site-footer {
     text-align: center;
     padding: 1rem;
-    font-size: 0.75rem; /* Reduced font size for desktop */
+    font-size: 0.75rem;
     color: var(--text-secondary);
     background: rgba(245, 245, 245, 0.95);
-    margin-top: auto; /* Push footer to the bottom of .content */
+    margin-top: auto;
 }
 
 .site-footer p {
@@ -337,8 +358,12 @@ body {
         opacity: 0.25;
     }
 
+    .webgl-fallback p {
+        font-size: 0.8rem;
+    }
+
     .site-footer {
-        font-size: 0.65rem; /* Further reduced font size for mobile */
+        font-size: 0.65rem;
         padding: 0.75rem;
     }
 }
