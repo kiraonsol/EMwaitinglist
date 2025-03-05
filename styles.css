@@ -70,24 +70,27 @@ body {
     font-size: clamp(3rem, 8vw, 5rem);
     line-height: 1;
     margin-bottom: 2rem;
-    opacity: 0;
+    /* Removed animation for testing */
+    /* opacity: 0;
     transform: translateY(40px) scale(0.95);
-    animation: fadeUpScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeUpScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; */
 }
 
 .subtitle {
     font-size: clamp(1.1rem, 2vw, 1.3rem);
     color: var(--text-secondary);
     margin-bottom: 2.5rem;
-    opacity: 0;
+    /* Removed animation for testing */
+    /* opacity: 0;
     transform: translateY(40px);
-    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; */
 }
 
 .waitlist-form {
-    opacity: 0;
+    /* Removed animation for testing */
+    /* opacity: 0;
     transform: translateY(40px);
-    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; */
 }
 
 .form-group {
@@ -140,9 +143,10 @@ body {
     aspect-ratio: 16/9;
     border-radius: 16px;
     overflow: hidden;
-    opacity: 0;
+    /* Removed animation for testing */
+    /* opacity: 0;
     transform: translateY(40px);
-    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; */
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     background: var(--glass);
     backdrop-filter: blur(12px);
@@ -171,6 +175,8 @@ body {
     z-index: 1;
 }
 
+/* Removed animations for testing */
+/*
 @keyframes fadeUp {
     to {
         opacity: 1;
@@ -184,6 +190,7 @@ body {
         transform: translateY(0) scale(1);
     }
 }
+*/
 
 .highlight {
     color: var(--primary);
@@ -199,14 +206,14 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    padding: 1.5rem; /* Reduced padding for tighter placement */
+    padding: 1.5rem;
     z-index: 3;
 }
 
 .site-logo {
-    width: 80px; /* Smaller size for a "neat" look */
+    width: 80px;
     height: auto;
-    display: block; /* Ensure it behaves as a block element */
+    display: block;
     opacity: 0;
     transform: translateY(-20px);
     animation: fadeDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
