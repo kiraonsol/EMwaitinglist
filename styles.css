@@ -27,14 +27,14 @@ body {
 }
 
 #webgl-background {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     z-index: 1;
     opacity: 0.25;
-    display: block; /* Ensure the canvas is visible */
+    display: block;
 }
 
 .content {
@@ -69,6 +69,7 @@ body {
 .hero-content {
     max-width: 600px;
     grid-area: hero;
+    position: relative; /* Allow the canvas to be positioned relative to this */
 }
 
 .title-sequence {
@@ -78,6 +79,8 @@ body {
     opacity: 0;
     transform: translateY(40px) scale(0.95);
     animation: fadeUpScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    position: relative;
+    z-index: 2; /* Ensure text is above the canvas */
 }
 
 .subtitle {
@@ -87,6 +90,8 @@ body {
     opacity: 0;
     transform: translateY(40px);
     animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+    position: relative;
+    z-index: 2; /* Ensure text is above the canvas */
 }
 
 .waitlist-section {
@@ -154,7 +159,7 @@ body {
     backdrop-filter: blur(12px);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     grid-area: video;
-    align-self: start; /* Ensure it aligns to the top of the grid area */
+    align-self: start;
 }
 
 .video-container:hover {
@@ -253,6 +258,9 @@ body {
         text-align: center;
         padding-top: 6rem;
         grid-area: hero;
+        background: rgba(245, 245, 245, 0.9); /* Semi-transparent background for readability */
+        border-radius: 12px;
+        padding-bottom: 2rem; /* Add padding to ensure the grid fills the area */
     }
 
     .title-sequence {
@@ -304,6 +312,15 @@ body {
     .site-logo {
         width: 60px;
     }
+
+    #webgl-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
 }
 
 @media (max-width: 480px) {
@@ -313,6 +330,7 @@ body {
 
     .hero-content {
         padding-top: 5.5rem;
+        padding-bottom: 1.5rem;
     }
 
     .title-sequence {
