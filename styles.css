@@ -34,6 +34,7 @@ body {
     height: 100vh;
     z-index: 1;
     opacity: 0.25;
+    display: block; /* Ensure the canvas is visible */
 }
 
 .content {
@@ -58,12 +59,16 @@ body {
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "hero video"
+        "waitlist video";
     gap: 4rem;
     align-items: center;
 }
 
 .hero-content {
     max-width: 600px;
+    grid-area: hero;
 }
 
 .title-sequence {
@@ -88,6 +93,7 @@ body {
     opacity: 0;
     transform: translateY(40px);
     animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+    grid-area: waitlist;
 }
 
 .form-group {
@@ -147,6 +153,8 @@ body {
     background: var(--glass);
     backdrop-filter: blur(12px);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    grid-area: video;
+    align-self: start; /* Ensure it aligns to the top of the grid area */
 }
 
 .video-container:hover {
@@ -229,7 +237,6 @@ body {
     .container {
         grid-template-columns: 1fr;
         gap: 2rem;
-        /* Define grid areas for reordering */
         grid-template-areas: 
             "hero"
             "video"
@@ -244,7 +251,7 @@ body {
     .hero-content {
         max-width: 100%;
         text-align: center;
-        padding-top: 6rem; /* Increased gap between logo and title */
+        padding-top: 6rem;
         grid-area: hero;
     }
 
@@ -305,7 +312,7 @@ body {
     }
 
     .hero-content {
-        padding-top: 5.5rem; /* Slightly reduced for smaller screens */
+        padding-top: 5.5rem;
     }
 
     .title-sequence {
