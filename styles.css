@@ -260,7 +260,8 @@ body {
         padding-bottom: 2rem;
         background: rgba(245, 245, 245, 0.9);
         border-radius: 12px;
-        /* Removed min-height to reduce the gap */
+        position: relative;
+        overflow: hidden; /* Ensure the canvas doesn't overflow */
     }
 
     .title-sequence {
@@ -320,6 +321,7 @@ body {
         width: 100%;
         height: 100%;
         z-index: 1;
+        opacity: 0.25; /* Ensure it’s visible */
     }
 }
 
@@ -331,7 +333,6 @@ body {
     .hero-content {
         padding-top: 5.5rem;
         padding-bottom: 1.5rem;
-        /* Removed min-height to reduce the gap */
     }
 
     .title-sequence {
