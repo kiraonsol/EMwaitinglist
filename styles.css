@@ -184,6 +184,19 @@ body {
     z-index: 1;
 }
 
+.site-footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    background: rgba(245, 245, 245, 0.95);
+    margin-top: auto; /* Push footer to the bottom of .content */
+}
+
+.site-footer p {
+    margin: 0;
+}
+
 @keyframes fadeUp {
     to {
         opacity: 1;
@@ -261,7 +274,7 @@ body {
         background: rgba(245, 245, 245, 0.9);
         border-radius: 12px;
         position: relative;
-        overflow: hidden; /* Ensure the canvas doesn't overflow */
+        overflow: hidden;
     }
 
     .title-sequence {
@@ -321,7 +334,12 @@ body {
         width: 100%;
         height: 100%;
         z-index: 1;
-        opacity: 0.25; /* Ensure it’s visible */
+        opacity: 0.25;
+    }
+
+    .site-footer {
+        font-size: 0.8rem;
+        padding: 0.75rem;
     }
 }
 
