@@ -6,7 +6,7 @@ class WaitlistApp {
 
     initWebGL() {
         const params = {
-            enableWebGL: window.innerWidth > 768, // Disable WebGL on mobile
+            enableWebGL: window.innerWidth > 768,
             particleCount: window.innerWidth > 1200 ? 120 : 60,
             animationSpeed: 0.0015
         };
