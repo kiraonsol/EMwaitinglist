@@ -199,17 +199,18 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    padding: 2rem;
+    padding: 1.5rem; /* Reduced padding for tighter placement */
     z-index: 3;
 }
 
 .site-logo {
-    width: 100px;
+    width: 80px; /* Smaller size for a "neat" look */
     height: auto;
+    display: block; /* Ensure it behaves as a block element */
     opacity: 0;
     transform: translateY(-20px);
     animation: fadeDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .site-logo:hover {
