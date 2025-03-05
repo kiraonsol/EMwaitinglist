@@ -260,7 +260,7 @@ body {
         padding-bottom: 2rem;
         background: rgba(245, 245, 245, 0.9);
         border-radius: 12px;
-        min-height: 50vh; /* Increased height to make the grid span more vertically */
+        /* Removed min-height to reduce the gap */
     }
 
     .title-sequence {
@@ -331,7 +331,7 @@ body {
     .hero-content {
         padding-top: 5.5rem;
         padding-bottom: 1.5rem;
-        min-height: 60vh; /* Further increased height for smaller screens */
+        /* Removed min-height to reduce the gap */
     }
 
     .title-sequence {
