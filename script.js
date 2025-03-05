@@ -29,17 +29,21 @@ class WaitlistApp {
             return;
         }
 
+        console.log("Window innerWidth:", window.innerWidth);
+        console.log("Moving canvas for mobile check...");
+
         // Move the canvas inside .hero-content on mobile (<= 1024px)
         if (window.innerWidth <= 1024) {
             heroContent.appendChild(canvas);
             console.log("Moved canvas to .hero-content for mobile.");
+            console.log("Canvas parent after move:", canvas.parentNode);
         } else {
             console.log("Canvas remains at top level for desktop.");
         }
 
         const gl = canvas.getContext('webgl');
         if (!gl) {
-            console.error("WebGL is not supported on this device.");
+            console.error("WebGL is not supported on this device. Please ensure your browser supports WebGL and it is enabled.");
             return;
         }
 
@@ -83,6 +87,8 @@ class WaitlistApp {
                 }
                 geometry.attributes.position.needsUpdate = true;
                 renderer.render(scene, camera);
+            } else {
+                console.log("Frame skipped due to large deltaTime:", deltaTime);
             }
             requestAnimationFrame(animate);
         };
@@ -92,15 +98,18 @@ class WaitlistApp {
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
 
+            console.log("Window resized, new innerWidth:", window.innerWidth);
             if (window.innerWidth <= 1024) {
                 if (canvas.parentNode !== heroContent) {
                     heroContent.appendChild(canvas);
                     console.log("Moved canvas to .hero-content on resize (mobile).");
+                    console.log("Canvas parent after resize move:", canvas.parentNode);
                 }
             } else {
                 if (canvas.parentNode !== document.body) {
                     document.body.insertBefore(canvas, document.body.firstChild);
                     console.log("Moved canvas to body on resize (desktop).");
+                    console.log("Canvas parent after resize move:", canvas.parentNode);
                 }
             }
         };
