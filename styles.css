@@ -70,27 +70,24 @@ body {
     font-size: clamp(3rem, 8vw, 5rem);
     line-height: 1;
     margin-bottom: 2rem;
-    /* Removed animation for testing */
-    /* opacity: 0;
+    opacity: 0;
     transform: translateY(40px) scale(0.95);
-    animation: fadeUpScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; */
+    animation: fadeUpScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .subtitle {
     font-size: clamp(1.1rem, 2vw, 1.3rem);
     color: var(--text-secondary);
     margin-bottom: 2.5rem;
-    /* Removed animation for testing */
-    /* opacity: 0;
+    opacity: 0;
     transform: translateY(40px);
-    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; */
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
 }
 
 .waitlist-form {
-    /* Removed animation for testing */
-    /* opacity: 0;
+    opacity: 0;
     transform: translateY(40px);
-    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; */
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
 }
 
 .form-group {
@@ -143,10 +140,9 @@ body {
     aspect-ratio: 16/9;
     border-radius: 16px;
     overflow: hidden;
-    /* Removed animation for testing */
-    /* opacity: 0;
+    opacity: 0;
     transform: translateY(40px);
-    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; */
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     background: var(--glass);
     backdrop-filter: blur(12px);
@@ -175,8 +171,6 @@ body {
     z-index: 1;
 }
 
-/* Removed animations for testing */
-/*
 @keyframes fadeUp {
     to {
         opacity: 1;
@@ -190,7 +184,6 @@ body {
         transform: translateY(0) scale(1);
     }
 }
-*/
 
 .highlight {
     color: var(--primary);
@@ -232,27 +225,99 @@ body {
     }
 }
 
+/* Mobile Optimizations */
 @media (max-width: 1024px) {
     .container {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 2rem; /* Reduced gap for mobile */
+    }
+
+    .hero-section {
+        padding: 1rem; /* Reduced padding for mobile */
+        min-height: auto; /* Allow content to fit naturally */
     }
 
     .hero-content {
         max-width: 100%;
         text-align: center;
+        padding-top: 5rem; /* Add space for the logo */
     }
 
-    .video-container {
-        max-width: 700px;
-        margin: 0 auto;
+    .title-sequence {
+        font-size: clamp(2rem, 6vw, 3.5rem); /* Smaller title on mobile */
+        margin-bottom: 1.5rem;
+    }
+
+    .subtitle {
+        font-size: clamp(0.9rem, 3vw, 1.1rem); /* Smaller subtitle on mobile */
+        margin-bottom: 2rem;
     }
 
     .form-group {
         flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .input-field {
+        padding: 0.75rem 1rem; /* Slightly smaller padding */
+        font-size: 1rem; /* Ensure readability */
     }
 
     .submit-btn {
         width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+    }
+
+    .form-note {
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+    }
+
+    .video-container {
+        max-width: 100%; /* Full width on mobile */
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .site-header {
+        padding: 1rem; /* Slightly less padding on mobile */
+    }
+
+    .site-logo {
+        width: 60px; /* Smaller logo on mobile */
+    }
+}
+
+/* Extra small screens (e.g., phones < 480px) */
+@media (max-width: 480px) {
+    .hero-section {
+        padding: 0.5rem;
+    }
+
+    .title-sequence {
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+    }
+
+    .subtitle {
+        font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    }
+
+    .input-field,
+    .submit-btn {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+    }
+
+    .form-note {
+        font-size: 0.75rem;
+    }
+
+    .site-header {
+        padding: 0.75rem;
+    }
+
+    .site-logo {
+        width: 50px; /* Even smaller logo for very small screens */
     }
 }
