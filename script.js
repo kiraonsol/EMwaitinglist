@@ -1,7 +1,26 @@
 class WaitlistApp {
     constructor() {
+        this.initFirebase();
         this.initWebGL();
         this.initForm();
+    }
+
+    initFirebase() {
+        // Replace with your Firebase configuration from the Firebase Console
+   const firebaseConfig = {
+    apiKey: "AIzaSyDGFuDNLDIgAuXxfH0ZjkxR09q53yfhTag",
+    authDomain: "evil-model-waitlist.firebaseapp.com",
+    projectId: "evil-model-waitlist",
+    storageBucket: "evil-model-waitlist.firebasestorage.app",
+    messagingSenderId: "20545536094",
+    appId: "1:20545536094:web:f0612c08f6cb4b749cb4cf",
+    measurementId: "G-14YYDS69BW"
+  };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        this.db = firebase.firestore();
+        console.log("Firebase initialized successfully.");
     }
 
     initWebGL() {
@@ -50,7 +69,7 @@ class WaitlistApp {
         if (!gl) {
             console.error("WebGL is not supported on this device. Please ensure your browser supports WebGL and it is enabled.");
             if (webglFallback) {
-                webglFallback.style.display = 'flex'; // Show the fallback message
+                webglFallback.style.display = 'flex';
                 console.log("Showing WebGL fallback message.");
             }
             return;
@@ -168,9 +187,15 @@ class WaitlistApp {
             try {
                 button.disabled = true;
                 button.style.opacity = '0.7';
-                
-                // Simulate API call
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                console.log("Submitting email to Firebase:", email);
+
+                // Log the email to Firestore
+                await this.db.collection('waitlist_emails').add({
+                    email: email,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                console.log("Email successfully logged to Firebase.");
                 
                 button.innerHTML = 'Added ✓';
                 button.style.background = '#4CAF50';
@@ -183,6 +208,7 @@ class WaitlistApp {
                     button.disabled = false;
                 }, 2000);
             } catch (error) {
+                console.error("Error logging email to Firebase:", error);
                 button.innerHTML = 'Error!';
                 button.style.background = '#FF4444';
                 setTimeout(() => {
