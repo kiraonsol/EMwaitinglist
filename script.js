@@ -18,6 +18,7 @@ class WaitlistApp {
 
         const canvas = document.querySelector('#webgl-background');
         const heroContent = document.querySelector('.hero-content');
+        const webglFallback = document.querySelector('#webgl-fallback');
 
         if (!canvas) {
             console.error("Canvas element not found!");
@@ -27,6 +28,10 @@ class WaitlistApp {
         if (!heroContent) {
             console.error("Hero content element not found!");
             return;
+        }
+
+        if (!webglFallback) {
+            console.error("WebGL fallback element not found!");
         }
 
         console.log("Window innerWidth:", window.innerWidth);
@@ -44,6 +49,10 @@ class WaitlistApp {
         const gl = canvas.getContext('webgl');
         if (!gl) {
             console.error("WebGL is not supported on this device. Please ensure your browser supports WebGL and it is enabled.");
+            if (webglFallback) {
+                webglFallback.style.display = 'flex'; // Show the fallback message
+                console.log("Showing WebGL fallback message.");
+            }
             return;
         }
 
