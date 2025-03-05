@@ -19,10 +19,22 @@ class WaitlistApp {
         const canvas = document.querySelector('#webgl-background');
         const heroContent = document.querySelector('.hero-content');
 
+        if (!canvas) {
+            console.error("Canvas element not found!");
+            return;
+        }
+
+        if (!heroContent) {
+            console.error("Hero content element not found!");
+            return;
+        }
+
         // Move the canvas inside .hero-content on mobile (<= 1024px)
         if (window.innerWidth <= 1024) {
             heroContent.appendChild(canvas);
             console.log("Moved canvas to .hero-content for mobile.");
+        } else {
+            console.log("Canvas remains at top level for desktop.");
         }
 
         const gl = canvas.getContext('webgl');
@@ -80,7 +92,6 @@ class WaitlistApp {
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
 
-            // Re-check screen size on resize and move canvas if needed
             if (window.innerWidth <= 1024) {
                 if (canvas.parentNode !== heroContent) {
                     heroContent.appendChild(canvas);
