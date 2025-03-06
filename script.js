@@ -6,20 +6,25 @@ class WaitlistApp {
     }
 
     initFirebase() {
-        // Replace with your Firebase configuration from the Firebase Console
-        const firebaseConfig = {
-            apiKey: "your-api-key",
-            authDomain: "your-project-id.firebaseapp.com",
-            projectId: "your-project-id",
-            storageBucket: "your-project-id.appspot.com",
-            messagingSenderId: "your-sender-id",
-            appId: "your-app-id"
-        };
+        // Replace with your actual Firebase configuration from the Firebase Console
+const firebaseConfig = {
+  apiKey: "AIzaSyDGFuDNLDIgAuXxfH0ZjkxR09q53yfhTag",
+  authDomain: "evil-model-waitlist.firebaseapp.com",
+  projectId: "evil-model-waitlist",
+  storageBucket: "evil-model-waitlist.firebasestorage.app",
+  messagingSenderId: "20545536094",
+  appId: "1:20545536094:web:f0612c08f6cb4b749cb4cf",
+  measurementId: "G-14YYDS69BW"
+};
 
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        this.db = firebase.firestore();
-        console.log("Firebase initialized successfully.");
+        try {
+            firebase.initializeApp(firebaseConfig);
+            this.db = firebase.firestore();
+            console.log("Firebase initialized successfully.");
+        } catch (error) {
+            console.error("Failed to initialize Firebase:", error);
+        }
     }
 
     initWebGL() {
@@ -165,6 +170,7 @@ class WaitlistApp {
 
         console.log("Starting WebGL animation...");
         animate();
+        console.log("Video autoplay with sound attempted. Check console for autoplay status.");
     }
 
     initForm() {
@@ -172,11 +178,21 @@ class WaitlistApp {
         const button = form.querySelector('.submit-btn');
         const input = document.querySelector('.input-field');
 
+        if (!form || !button || !input) {
+            console.error("Form elements not found:", { form, button, input });
+            return;
+        }
+
+        console.log("Form elements found, setting up event listener...");
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = input.value.trim();
 
+            console.log("Form submitted, email:", email);
+
             if (!email || !email.includes('@')) {
+                console.log("Invalid email, adding error class...");
                 input.classList.add('error');
                 input.focus();
                 setTimeout(() => input.classList.remove('error'), 1000);
@@ -188,6 +204,10 @@ class WaitlistApp {
                 button.style.opacity = '0.7';
                 console.log("Submitting email to Firebase:", email);
 
+                if (!this.db) {
+                    throw new Error("Firestore database not initialized. Check Firebase configuration.");
+                }
+
                 // Log the email to Firestore
                 await this.db.collection('waitlist_emails').add({
                     email: email,
@@ -195,7 +215,7 @@ class WaitlistApp {
                 });
 
                 console.log("Email successfully logged to Firebase.");
-                
+
                 button.innerHTML = 'Added ✓';
                 button.style.background = '#4CAF50';
                 input.value = '';
