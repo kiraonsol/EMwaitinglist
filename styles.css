@@ -94,26 +94,16 @@ body {
 }
 
 .title-sequence {
-    width: 100%;
-    height: auto;
-    max-height: 150px; /* Match the viewBox height */
+    font-size: clamp(3rem, 8vw, 5rem);
+    line-height: 1;
+    margin-bottom: 2rem;
     opacity: 0;
     transform: translateY(40px) scale(0.95);
     animation: fadeUpScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     position: relative;
     z-index: 2;
-    display: block;
-}
-
-.title-sequence text {
-    font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: 90px; /* Increased to match the reference's boldness */
-    text-transform: uppercase;
-    fill: white; /* Ensure white fill */
-    stroke: var(--text); /* Black outline */
-    stroke-width: 5; /* Match the SVG stroke-width */
-    paint-order: stroke; /* Ensure stroke is drawn first, then fill */
+    color: var(--text); /* Solid black fill */
 }
 
 .subtitle {
@@ -315,12 +305,8 @@ body {
     }
 
     .title-sequence {
-        max-height: 100px; /* Adjust height for smaller screens */
-    }
-
-    .title-sequence text {
-        font-size: 60px; /* Match clamp(2rem, 6vw, 3.5rem) */
-        stroke-width: 3; /* Slightly thinner stroke for mobile */
+        font-size: clamp(2rem, 6vw, 3.5rem);
+        margin-bottom: 1.5rem;
     }
 
     .subtitle {
@@ -399,12 +385,7 @@ body {
     }
 
     .title-sequence {
-        max-height: 75px; /* Adjust height for smaller screens */
-    }
-
-    .title-sequence text {
-        font-size: 45px; /* Match clamp(1.5rem, 5vw, 2.5rem) */
-        stroke-width: 2; /* Even thinner stroke for smaller screens */
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
     }
 
     .subtitle {
