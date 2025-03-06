@@ -94,16 +94,22 @@ body {
 }
 
 .title-sequence {
-    font-size: clamp(3rem, 8vw, 5rem);
-    line-height: 1;
-    margin-bottom: 2rem;
+    width: 100%;
+    height: auto;
+    max-height: 100px; /* Approximate height to match previous font size */
     opacity: 0;
     transform: translateY(40px) scale(0.95);
     animation: fadeUpScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     position: relative;
     z-index: 2;
+    display: block;
+}
+
+.title-sequence text {
+    font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    color: var(--text); /* Solid black fill */
+    font-size: 72px; /* Base font size to match clamp(3rem, 8vw, 5rem) on desktop */
+    text-transform: uppercase;
 }
 
 .subtitle {
@@ -305,8 +311,12 @@ body {
     }
 
     .title-sequence {
-        font-size: clamp(2rem, 6vw, 3.5rem);
-        margin-bottom: 1.5rem;
+        max-height: 70px; /* Adjust height for smaller screens */
+    }
+
+    .title-sequence text {
+        font-size: 48px; /* Match clamp(2rem, 6vw, 3.5rem) */
+        stroke-width: 1.5; /* Slightly thinner stroke for mobile */
     }
 
     .subtitle {
@@ -385,7 +395,12 @@ body {
     }
 
     .title-sequence {
-        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        max-height: 50px; /* Adjust height for smaller screens */
+    }
+
+    .title-sequence text {
+        font-size: 36px; /* Match clamp(1.5rem, 5vw, 2.5rem) */
+        stroke-width: 1; /* Even thinner stroke for smaller screens */
     }
 
     .subtitle {
