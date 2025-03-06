@@ -7,15 +7,14 @@ class WaitlistApp {
 
     initFirebase() {
         // Replace with your Firebase configuration from the Firebase Console
-   const firebaseConfig = {
-    apiKey: "AIzaSyDGFuDNLDIgAuXxfH0ZjkxR09q53yfhTag",
-    authDomain: "evil-model-waitlist.firebaseapp.com",
-    projectId: "evil-model-waitlist",
-    storageBucket: "evil-model-waitlist.firebasestorage.app",
-    messagingSenderId: "20545536094",
-    appId: "1:20545536094:web:f0612c08f6cb4b749cb4cf",
-    measurementId: "G-14YYDS69BW"
-  };
+        const firebaseConfig = {
+            apiKey: "your-api-key",
+            authDomain: "your-project-id.firebaseapp.com",
+            projectId: "your-project-id",
+            storageBucket: "your-project-id.appspot.com",
+            messagingSenderId: "your-sender-id",
+            appId: "your-app-id"
+        };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
