@@ -103,7 +103,23 @@ body {
     position: relative;
     z-index: 2;
     font-weight: 800;
-    color: var(--text); /* Solid black fill */
+    color: transparent; /* Make the fill transparent to show the hollow effect */
+    -webkit-text-stroke: 2px var(--text); /* Black outline */
+    text-stroke: 2px var(--text); /* Fallback for non-Webkit browsers */
+    background: white; /* White background to match the hollow effect */
+    -webkit-text-fill-color: transparent; /* Ensure fill is transparent for Webkit browsers */
+    /* Fallback for browsers that don't support text-stroke */
+    text-shadow: 
+        2px 0 0 var(--text),
+        -2px 0 0 var(--text),
+        0 2px 0 var(--text),
+        0 -2px 0 var(--text),
+        2px 2px 0 var(--text),
+        -2px -2px 0 var(--text),
+        2px -2px 0 var(--text),
+        -2px 2px 0 var(--text); /* Simulate stroke with shadow */
+    /* Temporary border to confirm the element is styled */
+    border: 1px solid red;
 }
 
 .subtitle {
@@ -307,6 +323,18 @@ body {
     .title-sequence {
         font-size: clamp(2rem, 6vw, 3.5rem);
         margin-bottom: 1.5rem;
+        -webkit-text-stroke: 1.5px var(--text);
+        text-stroke: 1.5px var(--text);
+        /* Adjust text-shadow for smaller stroke */
+        text-shadow: 
+            1.5px 0 0 var(--text),
+            -1.5px 0 0 var(--text),
+            0 1.5px 0 var(--text),
+            0 -1.5px 0 var(--text),
+            1.5px 1.5px 0 var(--text),
+            -1.5px -1.5px 0 var(--text),
+            1.5px -1.5px 0 var(--text),
+            -1.5px 1.5px 0 var(--text);
     }
 
     .subtitle {
@@ -386,6 +414,18 @@ body {
 
     .title-sequence {
         font-size: clamp(1.5rem, 5vw, 2.5rem);
+        -webkit-text-stroke: 1px var(--text);
+        text-stroke: 1px var(--text);
+        /* Adjust text-shadow for even smaller stroke */
+        text-shadow: 
+            1px 0 0 var(--text),
+            -1px 0 0 var(--text),
+            0 1px 0 var(--text),
+            0 -1px 0 var(--text),
+            1px 1px 0 var(--text),
+            -1px -1px 0 var(--text),
+            1px -1px 0 var(--text),
+            -1px 1px 0 var(--text);
     }
 
     .subtitle {
