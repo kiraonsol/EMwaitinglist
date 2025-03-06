@@ -12,7 +12,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 html {
@@ -102,6 +102,11 @@ body {
     animation: fadeUpScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     position: relative;
     z-index: 2;
+    font-weight: 800;
+    color: var(--text); /* Black fill */
+    -webkit-text-stroke: 2px white; /* White outline */
+    text-stroke: 2px white; /* Fallback for non-Webkit browsers */
+    paint-order: stroke fill; /* Ensures stroke is drawn behind the fill */
 }
 
 .subtitle {
@@ -113,6 +118,7 @@ body {
     animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
     position: relative;
     z-index: 2;
+    font-weight: 400;
 }
 
 .waitlist-section {
@@ -133,9 +139,10 @@ body {
     padding: 1rem 1.5rem;
     border: 1px solid rgba(0, 0, 0, 0.05);
     border-radius: 8px;
-    background: linear-gradient(135deg, rgba(200, 200, 200, 0.15) 0%, rgba(150, 150, 150, 0.15) 100%); /* Subtle darker gradient */
+    background: linear-gradient(135deg, rgba(200, 200, 200, 0.15) 0%, rgba(150, 150, 150, 0.15) 100%);
     backdrop-filter: blur(12px);
     transition: all 0.3s ease;
+    font-weight: 400;
 }
 
 .input-field:focus {
@@ -164,6 +171,7 @@ body {
 .form-note {
     font-size: 0.9rem;
     color: var(--text-secondary);
+    font-weight: 400;
 }
 
 .video-container {
@@ -212,6 +220,7 @@ body {
     color: var(--text-secondary);
     background: rgba(245, 245, 245, 0.95);
     margin-top: auto;
+    font-weight: 400;
 }
 
 .site-footer p {
@@ -301,6 +310,8 @@ body {
     .title-sequence {
         font-size: clamp(2rem, 6vw, 3.5rem);
         margin-bottom: 1.5rem;
+        -webkit-text-stroke: 1.5px white; /* Slightly thinner stroke for mobile */
+        text-stroke: 1.5px white;
     }
 
     .subtitle {
@@ -380,6 +391,8 @@ body {
 
     .title-sequence {
         font-size: clamp(1.5rem, 5vw, 2.5rem);
+        -webkit-text-stroke: 1px white; /* Even thinner stroke for smaller screens */
+        text-stroke: 1px white;
     }
 
     .subtitle {
