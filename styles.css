@@ -82,7 +82,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: transparent; /* Ensure content inherits body background */
+    background-color: transparent;
 }
 
 .hero-section {
@@ -308,7 +308,7 @@ body.dark-mode .video-container:hover {
     position: relative;
     width: 80px;
     height: 80px;
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to ensure visibility */
 }
 
 .site-logo {
@@ -325,9 +325,11 @@ body.dark-mode .video-container:hover {
     z-index: 1;
 }
 
-.site-logo:hover {
-    transform: scale(1.05);
-    filter: brightness(1.2);
+.logo-fallback {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block; /* Show fallback by default */
 }
 
 .logo-animation {
@@ -337,6 +339,7 @@ body.dark-mode .video-container:hover {
     width: 80px;
     height: 80px;
     z-index: 0;
+    display: block; /* Ensure canvas is visible */
 }
 
 /* Theme Toggle Switch */
