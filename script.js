@@ -201,27 +201,26 @@ class WaitlistApp {
         });
 
         // Set canvas size based on CSS dimensions
-        let width = canvas.offsetWidth;
-        let height = canvas.offsetHeight;
-        if (width === 0 || height === 0) {
+        let size = canvas.offsetWidth; // Use width as the reference since container is square
+        if (size === 0) {
             console.warn("Canvas size is 0, setting default size.");
-            width = 80;
-            height = 80;
+            size = 80;
         }
-        canvas.width = width;
-        canvas.height = height;
-        renderer.setSize(width, height);
+        canvas.width = size;
+        canvas.height = size; // Ensure square canvas
+        renderer.setSize(size, size);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        // Adjust camera to fit the canvas
-        camera.left = -width / 2;
-        camera.right = width / 2;
-        camera.top = height / 2;
-        camera.bottom = -height / 2;
+        // Adjust camera to fit the square canvas
+        camera.left = -size / 2;
+        camera.right = size / 2;
+        camera.top = size / 2;
+        camera.bottom = -size / 2;
         camera.updateProjectionMatrix();
         camera.position.z = 1;
 
-        const geometry = new THREE.PlaneGeometry(width, height);
+        // Create a square plane to match the logo aspect ratio
+        const geometry = new THREE.PlaneGeometry(size, size); // Square plane
 
         // Load both logo textures
         const textureLoader = new THREE.TextureLoader();
@@ -321,7 +320,7 @@ class WaitlistApp {
                 fragmentShader,
                 uniforms: {
                     time: { value: 0.0 },
-                    resolution: { value: new THREE.Vector2(width, height) },
+                    resolution: { value: new THREE.Vector2(size, size) },
                     lightModeTexture: { value: lightModeTexture },
                     darkModeTexture: { value: darkModeTexture },
                     isDarkMode: { value: this.isDarkMode }
@@ -341,22 +340,20 @@ class WaitlistApp {
             };
 
             const handleResize = () => {
-                width = canvas.offsetWidth;
-                height = canvas.offsetHeight;
-                if (width === 0 || height === 0) {
+                size = canvas.offsetWidth;
+                if (size === 0) {
                     console.warn("Canvas size is 0 on resize, setting default size.");
-                    width = 80;
-                    height = 80;
+                    size = 80;
                 }
-                canvas.width = width;
-                canvas.height = height;
-                renderer.setSize(width, height);
-                material.uniforms.resolution.value.set(width, height);
+                canvas.width = size;
+                canvas.height = size; // Ensure square canvas
+                renderer.setSize(size, size);
+                material.uniforms.resolution.value.set(size, size);
 
-                camera.left = -width / 2;
-                camera.right = width / 2;
-                camera.top = height / 2;
-                camera.bottom = -height / 2;
+                camera.left = -size / 2;
+                camera.right = size / 2;
+                camera.top = size / 2;
+                camera.bottom = -size / 2;
                 camera.updateProjectionMatrix();
             };
 
@@ -365,7 +362,6 @@ class WaitlistApp {
 
             this.logoMaterial = material;
 
-            // Hide fallback image since WebGL is working
             if (logoFallback) {
                 logoFallback.style.display = 'none';
             }
@@ -458,7 +454,6 @@ class WaitlistApp {
 
         console.log("Theme toggle elements found:", { themeSwitch, themeLabel });
 
-        // Set initial state
         themeLabel.textContent = this.isDarkMode ? "Dark Mode" : "Light Mode";
         document.body.classList.toggle('dark-mode', this.isDarkMode);
         themeSwitch.checked = this.isDarkMode;
@@ -470,14 +465,12 @@ class WaitlistApp {
             document.body.classList.toggle('dark-mode', this.isDarkMode);
             themeLabel.textContent = this.isDarkMode ? "Dark Mode" : "Light Mode";
 
-            // Update WebGL background opacity
             if (this.backgroundMaterial) {
                 this.backgroundMaterial.opacity = this.isDarkMode ? 0.75 : 0.25;
                 this.backgroundMaterial.needsUpdate = true;
                 console.log("Updated background material opacity:", this.backgroundMaterial.opacity);
             }
 
-            // Update logo animation
             if (this.logoMaterial) {
                 this.logoMaterial.uniforms.isDarkMode.value = this.isDarkMode;
                 this.logoMaterial.needsUpdate = true;
