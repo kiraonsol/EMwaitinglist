@@ -307,13 +307,14 @@ body.dark-mode .video-container:hover {
 .logo-container {
     position: relative;
     width: 80px;
-    height: 80px;
-    overflow: visible; /* Changed from hidden to ensure visibility */
+    height: 80px; /* Ensure square aspect ratio */
+    aspect-ratio: 1 / 1; /* Enforce square aspect ratio */
+    overflow: visible;
 }
 
 .site-logo {
-    width: 80px;
-    height: 80px;
+    width: 100%;
+    height: 100%;
     position: absolute;
     top: 0;
     left: 0;
@@ -328,18 +329,18 @@ body.dark-mode .video-container:hover {
 .logo-fallback {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    display: block; /* Show fallback by default */
+    object-fit: contain; /* Preserve aspect ratio */
+    display: block;
 }
 
 .logo-animation {
     position: absolute;
     top: 0;
     left: 0;
-    width: 80px;
-    height: 80px;
-    z-index: 0;
-    display: block; /* Ensure canvas is visible */
+    width: 100%;
+    height: 100%; /* Ensure canvas fills container */
+    aspect-ratio: 1 / 1; /* Enforce square aspect ratio */
+    display: block;
 }
 
 /* Theme Toggle Switch */
@@ -482,17 +483,19 @@ input:checked + .slider:before {
 
     .logo-container {
         width: 60px;
-        height: 60px;
+        height: 60px; /* Ensure square aspect ratio */
+        aspect-ratio: 1 / 1;
     }
 
     .site-logo {
-        width: 60px;
-        height: 60px;
+        width: 100%;
+        height: 100%;
     }
 
     .logo-animation {
-        width: 60px;
-        height: 60px;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
     }
 
     #webgl-background {
@@ -568,17 +571,19 @@ input:checked + .slider:before {
 
     .logo-container {
         width: 50px;
-        height: 50px;
+        height: 50px; /* Ensure square aspect ratio */
+        aspect-ratio: 1 / 1;
     }
 
     .site-logo {
-        width: 50px;
-        height: 50px;
+        width: 100%;
+        height: 100%;
     }
 
     .logo-animation {
-        width: 50px;
-        height: 50px;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1 / 1;
     }
 
     .theme-label {
