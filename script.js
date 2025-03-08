@@ -201,13 +201,13 @@ class WaitlistApp {
         });
 
         // Set canvas size based on CSS dimensions
-        let size = canvas.offsetWidth; // Use width as the reference since container is square
+        let size = canvas.offsetWidth;
         if (size === 0) {
             console.warn("Canvas size is 0, setting default size.");
             size = 80;
         }
         canvas.width = size;
-        canvas.height = size; // Ensure square canvas
+        canvas.height = size;
         renderer.setSize(size, size);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
@@ -219,18 +219,17 @@ class WaitlistApp {
         camera.updateProjectionMatrix();
         camera.position.z = 1;
 
-        // Create a square plane to match the logo aspect ratio
-        const geometry = new THREE.PlaneGeometry(size, size); // Square plane
-
-        // Load both logo textures
+        // Load both logo textures to determine aspect ratio
         const textureLoader = new THREE.TextureLoader();
         let lightModeTexture, darkModeTexture;
         let texturesLoaded = 0;
 
-        const onTextureLoad = () => {
+        const onTextureLoad = (texture, isLightMode) => {
+            if (isLightMode) lightModeTexture = texture;
+            else darkModeTexture = texture;
             texturesLoaded++;
+            console.log(`Loaded texture (${isLightMode ? 'lightMode' : 'darkMode'}):`, texture.image.width, 'x', texture.image.height);
             if (texturesLoaded === 2) {
-                console.log("Both textures loaded successfully.");
                 initMaterial();
             }
         };
@@ -244,22 +243,14 @@ class WaitlistApp {
 
         textureLoader.load(
             'logo_black.png',
-            (texture) => {
-                lightModeTexture = texture;
-                console.log("Loaded logo_black.png");
-                onTextureLoad();
-            },
+            (texture) => onTextureLoad(texture, true),
             undefined,
             (error) => onTextureError(error, 'logo_black.png')
         );
 
         textureLoader.load(
             'logo.png',
-            (texture) => {
-                darkModeTexture = texture;
-                console.log("Loaded logo.png");
-                onTextureLoad();
-            },
+            (texture) => onTextureLoad(texture, false),
             undefined,
             (error) => onTextureError(error, 'logo.png')
         );
@@ -272,6 +263,14 @@ class WaitlistApp {
                 }
                 return;
             }
+
+            // Calculate aspect ratio based on the first texture (assuming both are similar)
+            const aspectRatio = lightModeTexture.image.width / lightModeTexture.image.height;
+            console.log("Texture aspect ratio:", aspectRatio);
+            const planeWidth = size;
+            const planeHeight = size / aspectRatio;
+
+            const geometry = new THREE.PlaneGeometry(planeWidth, planeHeight); // Adjust plane to match texture aspect ratio
 
             const vertexShader = `
                 varying vec2 vUv;
@@ -346,7 +345,7 @@ class WaitlistApp {
                     size = 80;
                 }
                 canvas.width = size;
-                canvas.height = size; // Ensure square canvas
+                canvas.height = size;
                 renderer.setSize(size, size);
                 material.uniforms.resolution.value.set(size, size);
 
@@ -454,16 +453,16 @@ class WaitlistApp {
 
         console.log("Theme toggle elements found:", { themeSwitch, themeLabel });
 
-        themeLabel.textContent = this.isDarkMode ? "Dark Mode" : "Light Mode";
+        themeLabel.textContent = this.isDarkMode ? "Evil Mode" : "Light Mode"; // Updated label for dark mode
         document.body.classList.toggle('dark-mode', this.isDarkMode);
         themeSwitch.checked = this.isDarkMode;
-        console.log("Initial theme state:", this.isDarkMode ? "Dark Mode" : "Light Mode");
+        console.log("Initial theme state:", this.isDarkMode ? "Evil Mode" : "Light Mode");
 
         themeSwitch.addEventListener('change', () => {
             console.log("Theme switch changed, checked:", themeSwitch.checked);
             this.isDarkMode = themeSwitch.checked;
+            themeLabel.textContent = this.isDarkMode ? "Evil Mode" : "Light Mode"; // Updated label for dark mode
             document.body.classList.toggle('dark-mode', this.isDarkMode);
-            themeLabel.textContent = this.isDarkMode ? "Dark Mode" : "Light Mode";
 
             if (this.backgroundMaterial) {
                 this.backgroundMaterial.opacity = this.isDarkMode ? 0.75 : 0.25;
@@ -477,7 +476,7 @@ class WaitlistApp {
                 console.log("Updated logo material isDarkMode:", this.isDarkMode);
             }
 
-            console.log(`Switched to ${this.isDarkMode ? 'dark' : 'light'} mode`);
+            console.log(`Switched to ${this.isDarkMode ? 'evil' : 'light'} mode`);
             console.log("Current body background:", window.getComputedStyle(document.body).backgroundColor);
         });
     }
