@@ -114,7 +114,9 @@ class WaitlistApp {
 
             if (deltaTime < 32) {
                 const positions = geometry.attributes.position.array;
-                for (let i = 0; i < positions.length; i += 1) {
+                // Increment by 3 to match the stride of x, y, z coordinates
+                for (let i = 0; i < positions.length; i += 3) {
+                    // Update z-coordinate (positions[i + 2]) based on x-coordinate (positions[i])
                     positions[i + 2] = Math.sin((currentTime * params.animationSpeed) + positions[i]) * 0.5;
                 }
                 geometry.attributes.position.needsUpdate = true;
