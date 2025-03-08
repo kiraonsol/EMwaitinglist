@@ -264,13 +264,18 @@ class WaitlistApp {
                 return;
             }
 
-            // Calculate aspect ratio based on the first texture (assuming both are similar)
-            const aspectRatio = lightModeTexture.image.width / lightModeTexture.image.height;
+            // Get texture dimensions and calculate aspect ratio
+            const textureWidth = lightModeTexture.image.width;
+            const textureHeight = lightModeTexture.image.height;
+            const aspectRatio = textureWidth / textureHeight;
             console.log("Texture aspect ratio:", aspectRatio);
-            const planeWidth = size;
-            const planeHeight = size / aspectRatio;
 
-            const geometry = new THREE.PlaneGeometry(planeWidth, planeHeight); // Adjust plane to match texture aspect ratio
+            // Adjust plane dimensions to match texture aspect ratio with a slight correction for perceived stretch
+            const planeWidth = size;
+            const planeHeight = size / aspectRatio * (1 / window.devicePixelRatio); // Slight correction for pixel ratio
+            console.log("Plane dimensions:", planeWidth, 'x', planeHeight);
+
+            const geometry = new THREE.PlaneGeometry(planeWidth, planeHeight);
 
             const vertexShader = `
                 varying vec2 vUv;
@@ -305,10 +310,10 @@ class WaitlistApp {
                     vec3 color = hsv2rgb(vec3(hue, 0.8, 1.0));
 
                     if (isDarkMode) {
-                        float mask = texture2D(darkModeTexture, vUv).a;
+                        float mask = texture2D(darkModeTexture, uv).a;
                         gl_FragColor = vec4(color, mask);
                     } else {
-                        float mask = texture2D(lightModeTexture, vUv).a;
+                        float mask = texture2D(lightModeTexture, uv).a;
                         gl_FragColor = vec4(0.0, 0.0, 0.0, mask);
                     }
                 }
@@ -453,7 +458,7 @@ class WaitlistApp {
 
         console.log("Theme toggle elements found:", { themeSwitch, themeLabel });
 
-        themeLabel.textContent = this.isDarkMode ? "Evil Mode" : "Light Mode"; // Updated label for dark mode
+        themeLabel.textContent = this.isDarkMode ? "Evil Mode" : "Light Mode";
         document.body.classList.toggle('dark-mode', this.isDarkMode);
         themeSwitch.checked = this.isDarkMode;
         console.log("Initial theme state:", this.isDarkMode ? "Evil Mode" : "Light Mode");
@@ -461,7 +466,7 @@ class WaitlistApp {
         themeSwitch.addEventListener('change', () => {
             console.log("Theme switch changed, checked:", themeSwitch.checked);
             this.isDarkMode = themeSwitch.checked;
-            themeLabel.textContent = this.isDarkMode ? "Evil Mode" : "Light Mode"; // Updated label for dark mode
+            themeLabel.textContent = this.isDarkMode ? "Evil Mode" : "Light Mode";
             document.body.classList.toggle('dark-mode', this.isDarkMode);
 
             if (this.backgroundMaterial) {
