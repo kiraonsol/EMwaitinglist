@@ -307,8 +307,8 @@ body.dark-mode .video-container:hover {
 .logo-container {
     position: relative;
     width: 80px;
-    height: 80px; /* Ensure square aspect ratio */
-    aspect-ratio: 1 / 1; /* Enforce square aspect ratio */
+    height: 80px;
+    aspect-ratio: 1 / 1;
     overflow: visible;
 }
 
@@ -329,7 +329,7 @@ body.dark-mode .video-container:hover {
 .logo-fallback {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Preserve aspect ratio */
+    object-fit: contain;
     display: block;
 }
 
@@ -338,8 +338,8 @@ body.dark-mode .video-container:hover {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%; /* Ensure canvas fills container */
-    aspect-ratio: 1 / 1; /* Enforce square aspect ratio */
+    height: 100%;
+    aspect-ratio: 1 / 1;
     display: block;
 }
 
@@ -432,7 +432,8 @@ input:checked + .slider:before {
         background: var(--overlay);
         border-radius: 12px;
         position: relative;
-        overflow: hidden;
+        overflow: visible; /* Prevent clipping of the canvas */
+        z-index: 2; /* Ensure content is above the canvas */
     }
 
     .title-sequence {
@@ -483,7 +484,7 @@ input:checked + .slider:before {
 
     .logo-container {
         width: 60px;
-        height: 60px; /* Ensure square aspect ratio */
+        height: 60px;
         aspect-ratio: 1 / 1;
     }
 
@@ -504,7 +505,9 @@ input:checked + .slider:before {
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: 1;
+        z-index: 1; /* Ensure canvas is behind the hero content */
+        opacity: var(--webgl-opacity);
+        display: block;
     }
 
     .webgl-fallback p {
@@ -571,7 +574,7 @@ input:checked + .slider:before {
 
     .logo-container {
         width: 50px;
-        height: 50px; /* Ensure square aspect ratio */
+        height: 50px;
         aspect-ratio: 1 / 1;
     }
 
