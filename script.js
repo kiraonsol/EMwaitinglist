@@ -61,14 +61,13 @@ class WaitlistApp {
         console.log("Window innerWidth:", window.innerWidth);
         console.log("Moving canvas for mobile check...");
 
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({
-            canvas,
-            antialias: true,
-            alpha: true,
-            powerPreference: "high-performance"
-        });
+        if (window.innerWidth <= 1024) {
+            heroContent.appendChild(canvas);
+            console.log("Moved canvas to .hero-content for mobile.");
+            console.log("Canvas parent after move:", canvas.parentNode);
+        } else {
+            console.log("Canvas remains at top level for desktop.");
+        }
 
         const gl = canvas.getContext('webgl');
         if (!gl) {
@@ -80,7 +79,18 @@ class WaitlistApp {
             return;
         }
 
-        // Initialize renderer size
+        console.log("Initializing WebGL animation...");
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+            canvas,
+            antialias: true,
+            alpha: true,
+            powerPreference: "high-performance"
+        });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
         const geometry = new THREE.PlaneGeometry(30, 30, 32, 32);
@@ -96,34 +106,6 @@ class WaitlistApp {
         scene.add(mesh);
 
         camera.position.set(0, 5, 7);
-
-        // Function to update renderer size and camera aspect ratio
-        const updateRendererSize = () => {
-            if (window.innerWidth <= 1024) {
-                // On mobile, canvas is inside hero-content
-                const heroRect = heroContent.getBoundingClientRect();
-                renderer.setSize(heroRect.width, heroRect.height);
-                camera.aspect = heroRect.width / heroRect.height;
-                console.log("Mobile: Updated renderer size to hero-content dimensions:", heroRect.width, "x", heroRect.height);
-            } else {
-                // On desktop, canvas is full window
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                camera.aspect = window.innerWidth / window.innerHeight;
-                console.log("Desktop: Updated renderer size to window dimensions:", window.innerWidth, "x", window.innerHeight);
-            }
-            camera.updateProjectionMatrix();
-        };
-
-        // Initial canvas positioning and sizing
-        if (window.innerWidth <= 1024) {
-            heroContent.appendChild(canvas);
-            console.log("Moved canvas to .hero-content for mobile.");
-            console.log("Canvas parent after move:", canvas.parentNode);
-            updateRendererSize();
-        } else {
-            console.log("Canvas remains at top level for desktop.");
-            updateRendererSize();
-        }
 
         let lastTime = 0;
         const animate = (currentTime = 0) => {
@@ -144,6 +126,10 @@ class WaitlistApp {
         };
 
         const handleResize = () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
             console.log("Window resized, new innerWidth:", window.innerWidth);
             if (window.innerWidth <= 1024) {
                 if (canvas.parentNode !== heroContent) {
@@ -158,7 +144,6 @@ class WaitlistApp {
                     console.log("Canvas parent after resize move:", canvas.parentNode);
                 }
             }
-            updateRendererSize();
         };
 
         let resizeTimeout;
