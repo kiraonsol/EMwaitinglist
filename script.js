@@ -114,7 +114,7 @@ class WaitlistApp {
 
             if (deltaTime < 32) {
                 const positions = geometry.attributes.position.array;
-                for (let i = 0; i < positions.length; i += 3) {
+                for (let i = 0; i < positions.length; i += 1) {
                     positions[i + 2] = Math.sin((currentTime * params.animationSpeed) + positions[i]) * 0.5;
                 }
                 geometry.attributes.position.needsUpdate = true;
@@ -270,9 +270,9 @@ class WaitlistApp {
             const aspectRatio = textureWidth / textureHeight;
             console.log("Texture aspect ratio:", aspectRatio);
 
-            // Adjust plane dimensions to match texture aspect ratio with a slight correction for perceived stretch
+            // Adjust plane dimensions to match texture aspect ratio with a slight vertical correction to reduce horizontal stretch
             const planeWidth = size;
-            const planeHeight = size / aspectRatio * (1 / window.devicePixelRatio); // Slight correction for pixel ratio
+            const planeHeight = (size / aspectRatio) * 1.02; // Slight vertical stretch (1.02) to counteract horizontal stretch
             console.log("Plane dimensions:", planeWidth, 'x', planeHeight);
 
             const geometry = new THREE.PlaneGeometry(planeWidth, planeHeight);
