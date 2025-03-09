@@ -90,8 +90,19 @@ class WaitlistApp {
             powerPreference: "high-performance"
         });
 
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        // Set initial renderer size based on context
+        if (window.innerWidth <= 1024) {
+            const heroRect = heroContent.getBoundingClientRect();
+            renderer.setSize(heroRect.width, heroRect.height);
+            camera.aspect = heroRect.width / heroRect.height;
+            console.log("Mobile: Initial renderer size set to hero-content:", heroRect.width, "x", heroRect.height);
+        } else {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            console.log("Desktop: Initial renderer size set to window:", window.innerWidth, "x", window.innerHeight);
+        }
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        camera.updateProjectionMatrix();
 
         const geometry = new THREE.PlaneGeometry(30, 30, 32, 32);
         const material = new THREE.MeshBasicMaterial({
@@ -126,24 +137,17 @@ class WaitlistApp {
         };
 
         const handleResize = () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-
-            console.log("Window resized, new innerWidth:", window.innerWidth);
             if (window.innerWidth <= 1024) {
-                if (canvas.parentNode !== heroContent) {
-                    heroContent.appendChild(canvas);
-                    console.log("Moved canvas to .hero-content on resize (mobile).");
-                    console.log("Canvas parent after resize move:", canvas.parentNode);
-                }
+                const heroRect = heroContent.getBoundingClientRect();
+                renderer.setSize(heroRect.width, heroRect.height);
+                camera.aspect = heroRect.width / heroRect.height;
+                console.log("Mobile: Updated renderer size to hero-content:", heroRect.width, "x", heroRect.height);
             } else {
-                if (canvas.parentNode !== document.body) {
-                    document.body.insertBefore(canvas, document.body.firstChild);
-                    console.log("Moved canvas to body on resize (desktop).");
-                    console.log("Canvas parent after resize move:", canvas.parentNode);
-                }
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                console.log("Desktop: Updated renderer size to window:", window.innerWidth, "x", window.innerHeight);
             }
+            camera.updateProjectionMatrix();
         };
 
         let resizeTimeout;
